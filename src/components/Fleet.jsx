@@ -22,11 +22,15 @@ function Fleet() {
         <div className="mt-14 grid gap-8 md:grid-cols-3">
           {empresa.flota.map((item, index) => (
             <Reveal key={index} delay={index * 0.08}>
-              <div className="rounded-3xl bg-slate-50 p-8 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl">
-                <div className="mb-4 text-4xl">🚘</div>
+              <div className="card-premium rounded-3xl bg-slate-50 p-8 shadow-sm">
+                <div className="glow-blue-soft mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-2xl text-blue-600">
+                  🚘
+                </div>
+
                 <h3 className="text-xl font-bold text-slate-900">
                   {item.tipo}
                 </h3>
+
                 <p className="mt-3 text-slate-600 leading-7">
                   {item.descripcion}
                 </p>

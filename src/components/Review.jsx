@@ -27,9 +27,9 @@ function Review() {
           <div className="mt-12 rounded-3xl border border-slate-200 p-10 shadow-sm">
             
             {/* estrellas visuales */}
-            <div className="flex justify-center gap-2 text-3xl text-yellow-400">
-              ⭐ ⭐ ⭐ ⭐ ⭐
-            </div>
+            <span className="text-yellow-400 drop-shadow-[0_0_6px_rgba(250,204,21,0.7)]">
+            ⭐⭐⭐⭐⭐
+            </span>
 
             <p className="mt-6 text-slate-600">
               Si deseas compartir tu experiencia, puedes escribirnos directamente por WhatsApp.

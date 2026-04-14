@@ -13,7 +13,7 @@ export const empresa = {
 
   servicios: [
     {
-      titulo: "Traslados al aeropuerto",
+      titulo: "Traslados ejecutivos al aeropuerto",
       descripcion:
         "Servicio puntual y seguro para llegadas y salidas, con seguimiento en tiempo real y atención personalizada.",
     },
@@ -23,7 +23,7 @@ export const empresa = {
         "Movilidad ejecutiva para empresas, reuniones, visitas de negocios y atención a clientes importantes.",
     },
     {
-      titulo: "Transporte privado",
+      titulo: "Transporte privado premium",
       descripcion:
         "Traslados exclusivos con enfoque en comodidad, seguridad y discreción para clientes exigentes.",
     },

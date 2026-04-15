@@ -7,8 +7,8 @@ export const empresa = {
     "Transporte seguro, puntual y exclusivo para clientes exigentes, ejecutivos y traslados al aeropuerto.",
 
   ubicacion: "Lima, Perú",
-  telefono: "+51 951308050",
-  whatsapp: "51951308050",
+  telefono: "+51 987458696",
+  whatsapp: "51987458696",
   correo: "reservas@nbexecutive.com",
 
   servicios: [

@@ -1,8 +1,34 @@
+import { useState } from "react"
 import { empresa } from "../data/empresa"
 import Reveal from "./Reveal"
 
 function Contact() {
-  const urlWhatsApp = `https://wa.me/${empresa.whatsapp}`
+  const [formData, setFormData] = useState({
+    nombre: "",
+    telefono: "",
+    correo: "",
+    mensaje: "",
+  })
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  const handleWhatsAppSubmit = () => {
+    const texto = `Hola, quiero información sobre su servicio ejecutivo.
+
+Nombre: ${formData.nombre || "-"}
+Teléfono: ${formData.telefono || "-"}
+Correo: ${formData.correo || "-"}
+Consulta: ${formData.mensaje || "-"}`
+
+    const urlWhatsApp = `https://wa.me/${empresa.whatsapp}?text=${encodeURIComponent(texto)}`
+    window.open(urlWhatsApp, "_blank")
+  }
 
   return (
     <section id="contacto" className="bg-slate-950 py-24 text-white">
@@ -47,33 +73,47 @@ function Contact() {
             <div className="mt-8 space-y-4">
               <input
                 type="text"
+                name="nombre"
+                value={formData.nombre}
+                onChange={handleChange}
                 placeholder="Nombre completo"
                 className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-blue-500"
               />
+
               <input
                 type="text"
+                name="telefono"
+                value={formData.telefono}
+                onChange={handleChange}
                 placeholder="Teléfono"
                 className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-blue-500"
               />
+
               <input
                 type="email"
+                name="correo"
+                value={formData.correo}
+                onChange={handleChange}
                 placeholder="Correo electrónico"
                 className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-blue-500"
               />
+
               <textarea
                 rows="5"
+                name="mensaje"
+                value={formData.mensaje}
+                onChange={handleChange}
                 placeholder="Cuéntanos qué servicio necesitas"
                 className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-blue-500"
               ></textarea>
 
-              <a
-                href={urlWhatsApp}
-                target="_blank"
-                rel="noreferrer"
+              <button
+                type="button"
+                onClick={handleWhatsAppSubmit}
                 className="block w-full rounded-2xl bg-blue-600 py-4 text-center font-semibold text-white transition hover:bg-blue-700"
               >
                 Enviar consulta
-              </a>
+              </button>
             </div>
           </div>
         </Reveal>

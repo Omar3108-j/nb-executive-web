@@ -12,27 +12,35 @@ export const empresa = {
   correo: "reservas@nbexecutive.com",
 
   servicios: [
-    {
-      titulo: "Traslados ejecutivos al aeropuerto",
-      descripcion:
-        "Servicio puntual y seguro para llegadas y salidas, con seguimiento en tiempo real y atención personalizada.",
-    },
-    {
-      titulo: "Servicio corporativo",
-      descripcion:
-        "Movilidad ejecutiva para empresas, reuniones, visitas de negocios y atención a clientes importantes.",
-    },
-    {
-      titulo: "Transporte privado premium",
-      descripcion:
-        "Traslados exclusivos con enfoque en comodidad, seguridad y discreción para clientes exigentes.",
-    },
-    {
-      titulo: "Reservas programadas",
-      descripcion:
-        "Agenda tu servicio con anticipación y garantiza puntualidad en cada traslado.",
-    },
-  ],
+  {
+    titulo: "Taxi Ejecutivo",
+    descripcion:
+      "Traslados cómodos, seguros y puntuales para clientes que buscan una experiencia profesional.",
+    imagen:
+      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    titulo: "Taxi Aeropuerto",
+    descripcion:
+      "Servicio puntual para llegadas y salidas al aeropuerto Jorge Chávez con atención personalizada.",
+    imagen:
+      "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    titulo: "Traslado Corporativo",
+    descripcion:
+      "Movilidad ejecutiva para empresas, reuniones, eventos y atención a clientes importantes.",
+    imagen:
+      "https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    titulo: "Servicio por Reserva",
+    descripcion:
+      "Agenda tu traslado con anticipación y garantiza puntualidad en cada servicio.",
+    imagen:
+      "https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1200&q=80",
+  },
+],
 
   beneficios: [
     {

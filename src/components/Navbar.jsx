@@ -1,169 +1,206 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, House, BriefcaseBusiness, CarFront, Phone } from "lucide-react"
+import {
+  Menu,
+  X,
+  House,
+  BriefcaseBusiness,
+  CarFront,
+  Phone,
+  ArrowUpRight,
+} from "lucide-react"
 
 function Navbar() {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState("#inicio")
 
   const closeMenu = () => setOpen(false)
 
+  const navLinks = [
+    { href: "#inicio", label: "Inicio", icon: House },
+    { href: "#servicios", label: "Servicios", icon: BriefcaseBusiness },
+    { href: "#flota", label: "Flota", icon: CarFront },
+    { href: "#contacto", label: "Contacto", icon: Phone },
+  ]
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 18)
+
+      const sections = navLinks
+        .map((item) => document.querySelector(item.href))
+        .filter(Boolean)
+
+      const scrollPosition = window.scrollY + 140
+
+      for (const section of sections) {
+        const top = section.offsetTop
+        const height = section.offsetHeight
+        const id = `#${section.id}`
+
+        if (scrollPosition >= top && scrollPosition < top + height) {
+          setActiveSection(id)
+          break
+        }
+      }
+    }
+
+    handleScroll()
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between py-4">
+    <header className="sticky top-0 z-50">
+      {/* Fondo dinámico */}
+      <div
+        className={`absolute inset-0 transition-all duration-500 ${
+          scrolled
+            ? "border-b border-white/10 bg-slate-950/78 backdrop-blur-2xl shadow-[0_16px_40px_rgba(2,6,23,0.32)]"
+            : "border-b border-white/5 bg-[linear-gradient(180deg,rgba(2,6,23,0.78),rgba(2,6,23,0.42))] backdrop-blur-xl"
+        }`}
+      />
+
+      {/* Línea elegante */}
+      <div
+        className={`absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent transition-opacity duration-500 ${
+          scrolled ? "opacity-100" : "opacity-70"
+        }`}
+      />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
+        <div
+          className={`flex items-center justify-between transition-all duration-300 ${
+            scrolled ? "py-3" : "py-4.5"
+          }`}
+        >
+          {/* LOGO */}
           <motion.a
             href="#inicio"
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex items-center"
+            transition={{ duration: 0.65 }}
+            className="group flex items-center"
           >
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              className="leading-tight cursor-pointer"
-            >
-              <p className="text-white text-[1.9rem] sm:text-2xl font-black tracking-tight logo-glow leading-none">
-                N&B <span className="text-blue-500">Executive</span>
+            <div className="leading-tight">
+              <p
+                className={`logo-glow font-black leading-none tracking-[-0.03em] text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)] transition-all duration-300 ${
+                  scrolled
+                    ? "text-[1.7rem] sm:text-[1.9rem]"
+                    : "text-[1.9rem] sm:text-2xl"
+                }`}
+              >
+                N&amp;B{" "}
+                <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-cyan-300 bg-clip-text text-transparent">
+                  Executive
+                </span>
               </p>
-              <p className="mt-1 text-blue-400 text-[10px] sm:text-xs uppercase tracking-[0.28em] opacity-80">
-                Premium
+
+              <p
+                className={`mt-1 uppercase tracking-[0.32em] text-blue-300/95 drop-shadow-[0_1px_3px_rgba(0,0,0,0.45)] transition-all duration-300 ${
+                  scrolled
+                    ? "text-[9px] sm:text-[10px]"
+                    : "text-[10px] sm:text-xs"
+                }`}
+              >
+                Premium Transport
               </p>
-            </motion.div>
+            </div>
           </motion.a>
 
-          <nav className="hidden md:flex items-center gap-10 text-sm font-medium text-white/90">
-            <a href="#inicio" className="transition hover:text-blue-400">
-              Inicio
-            </a>
-            <a href="#servicios" className="transition hover:text-blue-400">
-              Servicios
-            </a>
-            <a href="#flota" className="transition hover:text-blue-400">
-              Flota
-            </a>
-            <a href="#contacto" className="transition hover:text-blue-400">
-              Contacto
-            </a>
+          {/* NAV DESKTOP */}
+          <nav
+            className={`hidden items-center md:flex transition-all duration-300 ${
+              scrolled ? "gap-2.5" : "gap-3"
+            }`}
+          >
+            {navLinks.map((item, index) => {
+              const isActive = activeSection === item.href
+
+              return (
+                <motion.a
+                  key={item.href}
+                  href={item.href}
+                  initial={{ opacity: 0, y: -16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, delay: 0.05 * index }}
+                  className={`relative rounded-full px-4 py-2.5 text-sm font-medium transition-all duration-300 ${
+                    isActive
+                      ? "bg-white/12 text-white"
+                      : "text-white/95 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] hover:bg-white/8"
+                  }`}
+                >
+                  {item.label}
+
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-active-pill"
+                      className="absolute inset-0 rounded-full border border-white/10 bg-white/5"
+                    />
+                  )}
+                </motion.a>
+              )
+            })}
           </nav>
 
-          <motion.a
-            href="#contacto"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.96 }}
-            className="hidden md:block rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(37,99,235,0.35)] transition hover:bg-blue-700"
-          >
-            Reservar ahora
-          </motion.a>
+          {/* BOTÓN CTA */}
+          <div className="hidden md:block">
+            <motion.a
+              href="#contacto"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              className={`group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-blue-600 text-sm font-bold text-white shadow-[0_14px_35px_rgba(37,99,235,0.32)] transition-all duration-300 hover:bg-blue-700 ${
+                scrolled ? "px-5 py-2.5" : "px-6 py-3"
+              }`}
+            >
+              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition duration-700 group-hover:translate-x-full" />
+              <span className="relative z-10">Reservar ahora</span>
+              <ArrowUpRight size={16} />
+            </motion.a>
+          </div>
 
-          <button
+          {/* BOTÓN MOBILE */}
+          <motion.button
             onClick={() => setOpen(true)}
-            className="md:hidden text-white"
-            aria-label="Abrir menú"
+            whileTap={{ scale: 0.95 }}
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white backdrop-blur-md hover:bg-white/10 md:hidden"
           >
-            <Menu size={28} />
-          </button>
+            <Menu size={22} />
+          </motion.button>
         </div>
       </div>
 
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {open && (
           <>
             <motion.div
-              className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-[60] bg-black/70"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeMenu}
             />
 
-            <motion.aside
-              className="fixed right-0 top-0 z-[70] h-screen w-[84%] max-w-[340px] border-l border-white/10 bg-gradient-to-b from-slate-950 via-slate-900 to-black p-6 text-white shadow-2xl md:hidden"
+            <motion.div
+              className="fixed right-0 top-0 z-[70] h-full w-[85%] max-w-sm bg-slate-950 text-white p-6"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 80, damping: 18 }}
             >
-              <div className="flex items-start justify-between">
-                <div className="leading-tight">
-                  <p className="text-2xl font-black tracking-tight">
-                    N&B <span className="text-blue-500">Executive</span>
-                  </p>
-                  <p className="mt-1 text-[10px] uppercase tracking-[0.28em] text-blue-400 opacity-80">
-                    Premium
-                  </p>
-                </div>
+              <button onClick={closeMenu}>
+                <X />
+              </button>
 
-                <button
-                  onClick={closeMenu}
-                  className="rounded-full border border-white/10 p-2 text-white transition hover:bg-white/5"
-                  aria-label="Cerrar menú"
-                >
-                  <X size={22} />
-                </button>
+              <div className="mt-10 flex flex-col gap-4">
+                {navLinks.map((item) => (
+                  <a key={item.href} href={item.href} onClick={closeMenu}>
+                    {item.label}
+                  </a>
+                ))}
               </div>
-
-              <div className="mt-8 h-px w-full bg-white/10" />
-
-              <nav className="mt-8 flex flex-col gap-3">
-                <a
-                  href="#inicio"
-                  onClick={closeMenu}
-                  className="flex items-center gap-3 rounded-2xl px-4 py-4 text-lg font-medium text-white/95 transition hover:bg-white/5 hover:text-blue-400"
-                >
-                  <House size={18} />
-                  Inicio
-                </a>
-
-                <a
-                  href="#servicios"
-                  onClick={closeMenu}
-                  className="flex items-center gap-3 rounded-2xl px-4 py-4 text-lg font-medium text-white/95 transition hover:bg-white/5 hover:text-blue-400"
-                >
-                  <BriefcaseBusiness size={18} />
-                  Servicios
-                </a>
-
-                <a
-                  href="#flota"
-                  onClick={closeMenu}
-                  className="flex items-center gap-3 rounded-2xl px-4 py-4 text-lg font-medium text-white/95 transition hover:bg-white/5 hover:text-blue-400"
-                >
-                  <CarFront size={18} />
-                  Flota
-                </a>
-
-                <a
-                  href="#contacto"
-                  onClick={closeMenu}
-                  className="flex items-center gap-3 rounded-2xl px-4 py-4 text-lg font-medium text-white/95 transition hover:bg-white/5 hover:text-blue-400"
-                >
-                  <Phone size={18} />
-                  Contacto
-                </a>
-              </nav>
-
-              <div className="mt-8">
-                <a
-                  href="#contacto"
-                  onClick={closeMenu}
-                  className="block rounded-full bg-blue-600 px-6 py-4 text-center text-base font-semibold text-white shadow-[0_10px_30px_rgba(37,99,235,0.35)] transition hover:bg-blue-700"
-                >
-                  Reservar ahora
-                </a>
-              </div>
-
-              <div className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-md">
-                <p className="text-sm uppercase tracking-[0.25em] text-blue-400">
-                  Atención
-                </p>
-                <p className="mt-2 text-lg font-semibold text-white">
-                  Respuesta rápida por WhatsApp
-                </p>
-                <p className="mt-2 text-sm leading-6 text-slate-300">
-                  Reserva traslados al aeropuerto, servicios corporativos y atención personalizada.
-                </p>
-              </div>
-            </motion.aside>
+            </motion.div>
           </>
         )}
       </AnimatePresence>

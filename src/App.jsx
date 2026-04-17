@@ -9,6 +9,7 @@ import FinalCta from "./components/FinalCta"
 import Footer from "./components/Footer"
 import WhatsAppButton from "./components/WhatsAppButton"
 import Review from "./components/Review"
+import PromoModal from "./components/PromoModal"
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <FinalCta />
       <Footer />
       <WhatsAppButton />
+      <PromoModal />
     </>
   )
 }

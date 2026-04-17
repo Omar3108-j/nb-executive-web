@@ -28,7 +28,9 @@ function Contact() {
   }
 
   const handleWhatsAppSubmit = () => {
-    const texto = `Hola, quiero información sobre su servicio ejecutivo.
+    const texto = `- Buen día, gracias por contactarnos.
+En N&B Executive Premium le ofrecemos un servicio seguro, puntual y de alto nivel 🚘✨
+Le invitamos a indicarnos su ubicación de origen para brindarle un servicio personalizado.
 
 Nombre: ${formData.nombre || "-"}
 Teléfono: ${formData.telefono || "-"}

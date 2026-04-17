@@ -72,7 +72,7 @@ function PromoModal() {
           />
 
           <motion.div
-            className="fixed inset-0 z-[110] flex items-center justify-center px-4 py-6"
+            className="fixed inset-0 z-[110] flex items-center justify-center px-3 py-4 sm:px-4 sm:py-6"
             initial={{ opacity: 0, scale: 0.94, y: 28 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.97, y: 14 }}
@@ -80,11 +80,12 @@ function PromoModal() {
           >
             <div
               className="
-                group relative w-full max-w-3xl overflow-hidden rounded-[34px]
-                border border-white/30 bg-white/85
-                shadow-[0_40px_120px_rgba(15,23,42,0.42)]
-                backdrop-blur-2xl
-              "
+              group relative w-full max-w-3xl overflow-hidden rounded-[28px] sm:rounded-[34px]
+              border border-white/30 bg-white/85
+              shadow-[0_40px_120px_rgba(15,23,42,0.42)]
+              backdrop-blur-2xl
+              max-h-[90vh] overflow-y-auto
+            "
             >
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_10%,rgba(37,99,235,0.16),transparent_30%),radial-gradient(circle_at_0%_100%,rgba(15,23,42,0.08),transparent_38%)]" />
               <div className="pointer-events-none absolute inset-0 rounded-[34px] ring-1 ring-inset ring-white/60" />
@@ -102,7 +103,7 @@ function PromoModal() {
                 <X size={20} />
               </button>
 
-              <div className="relative h-[310px] w-full overflow-hidden sm:h-[360px]">
+              <div className="relative h-[220px] w-full overflow-hidden sm:h-[360px]">
                 <div className="relative h-full w-full overflow-hidden">
                   <img
                     src={promoImg}
@@ -129,7 +130,7 @@ function PromoModal() {
                 </div>
                 <div className="absolute inset-x-5 bottom-5 sm:inset-x-6 sm:bottom-6">
                   <div className="max-w-2xl">
-                    <h3 className="text-3xl font-black leading-[0.95] tracking-[-0.03em] text-white sm:text-5xl">
+                    <h3 className="text-2xl font-black leading-[1.02] tracking-[-0.03em] text-white sm:text-5xl">
                       Traslado ejecutivo con imagen, puntualidad y confianza
                     </h3>
 
@@ -141,8 +142,8 @@ function PromoModal() {
                 </div>
               </div>
 
-              <div className="relative px-6 py-7 sm:px-8 sm:py-8">
-                <div className="grid gap-3 sm:grid-cols-3">
+              <div className="relative px-4 py-5 sm:px-8 sm:py-8">
+                <div className="grid gap-3 md:grid-cols-3">
                   {beneficios.map((item, i) => {
                     const Icon = item.icon
                     return (
@@ -184,18 +185,18 @@ function PromoModal() {
                   al aeropuerto, atención corporativa y viajes programados.
                 </p>
 
-                <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                   <a
                     href={urlWhatsApp}
                     target="_blank"
                     rel="noreferrer"
                     className="
-                      group relative inline-flex items-center justify-center gap-2 overflow-hidden
-                      rounded-full bg-blue-600 px-7 py-4 font-bold text-white
-                      shadow-[0_18px_45px_rgba(37,99,235,0.35)]
-                      transition-all duration-300
-                      hover:scale-[1.03] hover:bg-blue-700
-                    "
+                    group relative inline-flex w-full sm:w-auto items-center justify-center gap-2 overflow-hidden
+                    rounded-full bg-blue-600 px-6 py-3.5 font-bold text-white
+                    shadow-[0_18px_45px_rgba(37,99,235,0.35)]
+                    transition-all duration-300
+                    hover:scale-[1.03] hover:bg-blue-700
+                  "
                   >
                     <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition duration-700 group-hover:translate-x-full" />
                     <span className="relative z-10">Cotizar por WhatsApp</span>
@@ -208,10 +209,10 @@ function PromoModal() {
                   <button
                     onClick={handleClose}
                     className="
-                      rounded-full border border-slate-200 bg-white px-6 py-4
-                      font-semibold text-slate-700 transition duration-300
-                      hover:border-slate-300 hover:bg-slate-50
-                    "
+                    rounded-full border border-slate-200 bg-white px-6 py-3.5
+                    font-semibold text-slate-700 transition duration-300
+                    hover:border-slate-300 hover:bg-slate-50
+                  "
                   >
                     Cerrar
                   </button>

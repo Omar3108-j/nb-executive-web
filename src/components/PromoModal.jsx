@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, ArrowUpRight, ShieldCheck, Clock3, BriefcaseBusiness } from "lucide-react"
+import {
+  X,
+  ArrowUpRight,
+  ShieldCheck,
+  Clock3,
+  BriefcaseBusiness,
+  Star,
+} from "lucide-react"
 import { empresa } from "../data/empresa"
 import promoImg from "../assets/promo-executive.png"
 
@@ -8,59 +15,80 @@ function PromoModal() {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const alreadyClosed = sessionStorage.getItem("promoClosed")
-    if (!alreadyClosed) {
-      const timer = setTimeout(() => {
-        setOpen(true)
-      }, 1800)
+  const lastClosed = localStorage.getItem("promoLastClosed")
 
-      return () => clearTimeout(timer)
-    }
-  }, [])
+  const now = new Date().getTime()
+
+  // 10 minutos = 600000 ms
+  const TEN_MINUTES = 600000
+
+  if (!lastClosed || now - Number(lastClosed) > TEN_MINUTES) {
+    const timer = setTimeout(() => {
+      setOpen(true)
+    }, 1400)
+
+    return () => clearTimeout(timer)
+  }
+}, [])
 
   const handleClose = () => {
-    setOpen(false)
-    sessionStorage.setItem("promoClosed", "true")
-  }
+  setOpen(false)
+  localStorage.setItem("promoLastClosed", new Date().getTime())
+}
 
   const mensaje =
-    "Hola, quiero información sobre el servicio ejecutivo premium."
+    "Hola, deseo cotizar un traslado ejecutivo. Quisiera más información sobre disponibilidad y tarifas."
   const urlWhatsApp = `https://wa.me/${empresa.whatsapp}?text=${encodeURIComponent(mensaje)}`
+
+  const beneficios = [
+    {
+      icon: ShieldCheck,
+      title: "Servicio seguro",
+      desc: "Atención profesional",
+    },
+    {
+      icon: Clock3,
+      title: "Puntualidad real",
+      desc: "Disponibilidad inmediata",
+    },
+    {
+      icon: BriefcaseBusiness,
+      title: "Perfil corporativo",
+      desc: "Ideal para ejecutivos",
+    },
+  ]
 
   return (
     <AnimatePresence>
       {open && (
         <>
-          {/* OVERLAY */}
           <motion.div
-            className="fixed inset-0 z-[100] bg-slate-950/75 backdrop-blur-xl"
+            className="fixed inset-0 z-[100] bg-slate-950/80 backdrop-blur-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.35 }}
             onClick={handleClose}
           />
 
-          {/* MODAL */}
           <motion.div
             className="fixed inset-0 z-[110] flex items-center justify-center px-4 py-6"
-            initial={{ opacity: 0, scale: 0.92, y: 40 }}
+            initial={{ opacity: 0, scale: 0.94, y: 28 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 20 }}
+            exit={{ opacity: 0, scale: 0.97, y: 14 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
             <div
               className="
-                group relative w-full max-w-2xl overflow-hidden rounded-[32px]
-                border border-white/40 bg-white/80
-                shadow-[0_40px_120px_rgba(15,23,42,0.45)]
+                group relative w-full max-w-3xl overflow-hidden rounded-[34px]
+                border border-white/30 bg-white/85
+                shadow-[0_40px_120px_rgba(15,23,42,0.42)]
                 backdrop-blur-2xl
               "
             >
-              {/* GLOW BACKGROUND */}
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(37,99,235,0.15),transparent_30%),radial-gradient(circle_at_0%_100%,rgba(15,23,42,0.08),transparent_40%)]" />
-              <div className="pointer-events-none absolute inset-0 rounded-[32px] ring-1 ring-inset ring-white/60" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_10%,rgba(37,99,235,0.16),transparent_30%),radial-gradient(circle_at_0%_100%,rgba(15,23,42,0.08),transparent_38%)]" />
+              <div className="pointer-events-none absolute inset-0 rounded-[34px] ring-1 ring-inset ring-white/60" />
 
-              {/* CLOSE */}
               <button
                 onClick={handleClose}
                 className="
@@ -69,74 +97,74 @@ function PromoModal() {
                   backdrop-blur-md transition duration-300
                   hover:scale-105 hover:bg-black/65
                 "
+                aria-label="Cerrar modal"
               >
                 <X size={20} />
               </button>
 
-              {/* IMAGE SECTION */}
-              <div className="relative h-64 w-full overflow-hidden sm:h-72">
+              <div className="relative h-[310px] w-full overflow-hidden sm:h-[360px]">
                 <div className="relative h-full w-full overflow-hidden">
                   <img
                     src={promoImg}
                     alt="Servicio ejecutivo premium"
                     className="
                       h-full w-full object-cover object-[50%_25%]
-                      scale-[1.05] transition duration-[1200ms] ease-out
+                      scale-[1.05] transition duration-[1400ms] ease-out
                       group-hover:scale-[1.1]
                     "
                   />
 
-                  {/* OVERLAY PREMIUM */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.16),transparent_28%)]" />
 
-                  {/* LIGHT EFFECT */}
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.18),transparent_35%)]" />
-
-                  {/* SHINE EFFECT */}
                   <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-700 group-hover:opacity-100">
                     <div className="absolute -inset-[200%] rotate-12 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-[shine_2.5s_linear_infinite]" />
                   </div>
                 </div>
 
-                {/* BADGE */}
                 <div className="absolute left-5 top-5 sm:left-6 sm:top-6">
                   <p className="inline-flex rounded-full border border-blue-300/20 bg-blue-500/15 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.28em] text-blue-100 backdrop-blur-md sm:text-xs">
                     Atención premium
                   </p>
                 </div>
-
-                {/* TEXT */}
                 <div className="absolute inset-x-5 bottom-5 sm:inset-x-6 sm:bottom-6">
-                  <div className="max-w-lg">
-                    <h3 className="text-2xl font-black leading-tight text-white sm:text-4xl">
+                  <div className="max-w-2xl">
+                    <h3 className="text-3xl font-black leading-[0.95] tracking-[-0.03em] text-white sm:text-5xl">
                       Traslado ejecutivo con imagen, puntualidad y confianza
                     </h3>
 
-                    <p className="mt-3 max-w-md text-sm leading-6 text-white/80 sm:text-base">
-                      Servicio ideal para aeropuerto, reuniones corporativas y atención de clientes importantes.
+                    <p className="mt-4 max-w-2xl text-sm leading-7 text-white/80 sm:text-base">
+                      Servicio ideal para aeropuerto, reuniones corporativas y
+                      atención de clientes importantes.
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* CONTENT */}
               <div className="relative px-6 py-7 sm:px-8 sm:py-8">
                 <div className="grid gap-3 sm:grid-cols-3">
-                  {[ 
-                    { icon: ShieldCheck, title: "Servicio seguro", desc: "Atención profesional" },
-                    { icon: Clock3, title: "Puntualidad real", desc: "Disponibilidad inmediata" },
-                    { icon: BriefcaseBusiness, title: "Perfil corporativo", desc: "Ideal para ejecutivos" }
-                  ].map((item, i) => {
+                  {beneficios.map((item, i) => {
                     const Icon = item.icon
                     return (
-                      <div key={i} className="rounded-2xl border border-slate-200/80 bg-slate-50/80 p-4 backdrop-blur-sm transition hover:shadow-md">
+                      <div
+                        key={i}
+                        className="
+                          rounded-2xl border border-slate-200/80 bg-slate-50/85 p-4
+                          backdrop-blur-sm transition duration-300
+                          hover:shadow-md
+                        "
+                      >
                         <div className="flex items-center gap-3">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600/10 text-blue-600">
+                          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600/10 text-blue-600">
                             <Icon size={18} />
                           </div>
                           <div>
-                            <p className="text-sm font-bold text-slate-900">{item.title}</p>
-                            <p className="text-xs text-slate-500">{item.desc}</p>
+                            <p className="text-sm font-bold text-slate-900">
+                              {item.title}
+                            </p>
+                            <p className="text-xs text-slate-500">
+                              {item.desc}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -144,12 +172,18 @@ function PromoModal() {
                   })}
                 </div>
 
+                <div className="mt-6 rounded-[24px] border border-blue-100 bg-blue-50/70 px-4 py-4 text-center backdrop-blur-sm">
+                  <p className="text-sm font-semibold text-slate-700">
+                    Atención inmediata por WhatsApp · Coordinación rápida ·
+                    Imagen profesional
+                  </p>
+                </div>
+
                 <p className="mt-6 text-[15.5px] leading-7 text-slate-600 sm:text-base">
                   Reserva un servicio seguro, puntual y profesional para traslados
                   al aeropuerto, atención corporativa y viajes programados.
                 </p>
 
-                {/* CTA */}
                 <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                   <a
                     href={urlWhatsApp}
@@ -157,15 +191,18 @@ function PromoModal() {
                     rel="noreferrer"
                     className="
                       group relative inline-flex items-center justify-center gap-2 overflow-hidden
-                      rounded-full bg-blue-600 px-7 py-4 text-white font-bold
+                      rounded-full bg-blue-600 px-7 py-4 font-bold text-white
                       shadow-[0_18px_45px_rgba(37,99,235,0.35)]
                       transition-all duration-300
                       hover:scale-[1.03] hover:bg-blue-700
                     "
                   >
                     <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition duration-700 group-hover:translate-x-full" />
-                    <span className="relative z-10">Reservar por WhatsApp</span>
-                    <ArrowUpRight className="relative z-10 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" size={17} />
+                    <span className="relative z-10">Cotizar por WhatsApp</span>
+                    <ArrowUpRight
+                      className="relative z-10 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      size={17}
+                    />
                   </a>
 
                   <button

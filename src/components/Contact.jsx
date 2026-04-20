@@ -19,34 +19,90 @@ function Contact() {
     mensaje: "",
   })
 
+  const [errors, setErrors] = useState({})
+
   const handleChange = (e) => {
     const { name, value } = e.target
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }))
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }))
+  }
+
+  const validateForm = () => {
+    const newErrors = {}
+    const nombre = formData.nombre.trim()
+    const telefono = formData.telefono.trim()
+    const correo = formData.correo.trim()
+
+    if (!nombre) {
+      newErrors.nombre = "Ingresa tu nombre completo."
+    }
+
+    if (!telefono) {
+      newErrors.telefono = "Ingresa tu número de teléfono."
+    } else if (!/^[0-9+\s()-]{7,20}$/.test(telefono)) {
+      newErrors.telefono = "Ingresa un teléfono válido."
+    }
+
+    if (
+      correo &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)
+    ) {
+      newErrors.correo = "Ingresa un correo electrónico válido."
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
   }
 
   const handleWhatsAppSubmit = () => {
-    const texto = `- Buen día, gracias por contactarnos.
-En N&B Executive Premium le ofrecemos un servicio seguro, puntual y de alto nivel 🚘✨
-Le invitamos a indicarnos su ubicación de origen para brindarle un servicio personalizado.
+    if (!validateForm()) return
 
-Nombre: ${formData.nombre || "-"}
-Teléfono: ${formData.telefono || "-"}
-Correo: ${formData.correo || "-"}
-Consulta: ${formData.mensaje || "-"}`
+    const nombre = formData.nombre.trim()
+    const telefono = formData.telefono.trim()
+    const correo = formData.correo.trim()
+    const mensajeUsuario = formData.mensaje.trim()
 
-    const urlWhatsApp = `https://wa.me/${empresa.whatsapp}?text=${encodeURIComponent(texto)}`
-    window.open(urlWhatsApp, "_blank")
+    const mensaje = `Buen día, gracias por contactarnos.
+En N&B Executive Premium ofrecemos traslados seguros, puntuales y de alto nivel.
+
+Nombre: ${nombre}
+Teléfono: ${telefono}
+Correo: ${correo || "-"}
+Servicio requerido: ${mensajeUsuario || "-"}
+
+Indíquenos su ubicación de origen para brindarle una atención personalizada.`
+
+    const numeroWhatsApp = String(empresa.whatsapp).replace(/\D/g, "")
+    const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`
+
+    window.open(urlWhatsApp, "_blank", "noopener,noreferrer")
   }
+
+  const inputClass = (fieldName) => `
+    w-full rounded-2xl border bg-white px-4 py-3.5 outline-none transition-all duration-300
+    placeholder:text-slate-400
+    focus:ring-4
+    ${
+      errors[fieldName]
+        ? "border-red-400 focus:border-red-500 focus:ring-red-500/10 bg-red-50/40"
+        : "border-slate-200 focus:border-blue-500 focus:ring-blue-500/10"
+    }
+  `
 
   return (
     <section
       id="contacto"
       className="relative overflow-hidden bg-slate-50 py-24 md:py-28"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.08),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(15,23,42,0.06),transparent_28%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(30,64,175,0.24)_0%,rgba(59,130,246,0.10)_28%,rgba(255,255,255,0.88)_58%,rgba(255,255,255,0.96)_100%),radial-gradient(circle_at_top_left,rgba(37,99,235,0.22),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(15,23,42,0.08),transparent_30%)]" />
       <div className="absolute left-[-80px] top-10 h-72 w-72 rounded-full bg-blue-200/30 blur-3xl" />
       <div className="absolute right-[-80px] bottom-0 h-72 w-72 rounded-full bg-slate-300/30 blur-3xl" />
 
@@ -89,7 +145,9 @@ Consulta: ${formData.mensaje || "-"}`
                     <Clock3 size={20} />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-slate-900">Disponibilidad</p>
+                    <p className="text-sm font-bold text-slate-900">
+                      Disponibilidad
+                    </p>
                     <p className="text-sm text-slate-500">
                       Coordinación ágil por WhatsApp
                     </p>
@@ -163,50 +221,73 @@ Consulta: ${formData.mensaje || "-"}`
                 </div>
                 <div>
                   <h3 className="text-2xl font-black text-slate-900">
-                    Solicita información
+                    Cotiza tu servicio
                   </h3>
                   <p className="mt-1 text-slate-600">
-                    Déjanos tus datos y te atenderemos por WhatsApp.
+                    Completa tus datos y te atenderemos por WhatsApp.
                   </p>
                 </div>
               </div>
 
               <div className="mt-8 grid gap-4">
-                <input
-                  type="text"
-                  name="nombre"
-                  value={formData.nombre}
-                  onChange={handleChange}
-                  placeholder="Nombre completo"
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
-                />
+                <div>
+                  <input
+                    type="text"
+                    name="nombre"
+                    value={formData.nombre}
+                    onChange={handleChange}
+                    placeholder="Nombre completo"
+                    className={inputClass("nombre")}
+                  />
+                  {errors.nombre && (
+                    <p className="mt-2 text-sm font-medium text-red-500">
+                      {errors.nombre}
+                    </p>
+                  )}
+                </div>
 
-                <input
-                  type="text"
-                  name="telefono"
-                  value={formData.telefono}
-                  onChange={handleChange}
-                  placeholder="Teléfono"
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
-                />
+                <div>
+                  <input
+                    type="text"
+                    name="telefono"
+                    value={formData.telefono}
+                    onChange={handleChange}
+                    placeholder="Teléfono"
+                    className={inputClass("telefono")}
+                  />
+                  {errors.telefono && (
+                    <p className="mt-2 text-sm font-medium text-red-500">
+                      {errors.telefono}
+                    </p>
+                  )}
+                </div>
 
-                <input
-                  type="email"
-                  name="correo"
-                  value={formData.correo}
-                  onChange={handleChange}
-                  placeholder="Correo electrónico"
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
-                />
+                <div>
+                  <input
+                    type="email"
+                    name="correo"
+                    value={formData.correo}
+                    onChange={handleChange}
+                    placeholder="Correo electrónico (opcional)"
+                    className={inputClass("correo")}
+                  />
+                  {errors.correo && (
+                    <p className="mt-2 text-sm font-medium text-red-500">
+                      {errors.correo}
+                    </p>
+                  )}
+                </div>
 
-                <textarea
-                  rows="5"
-                  name="mensaje"
-                  value={formData.mensaje}
-                  onChange={handleChange}
-                  placeholder="Cuéntanos qué servicio necesitas"
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
-                ></textarea>
+                <div>
+                  <textarea
+                    rows="5"
+                    name="mensaje"
+                    value={formData.mensaje}
+                    onChange={handleChange}
+                    placeholder="Cuéntanos qué servicio necesitas"
+                    className={inputClass("mensaje")}
+                  ></textarea>
+                </div>
 
                 <button
                   type="button"
@@ -222,12 +303,16 @@ Consulta: ${formData.mensaje || "-"}`
                   "
                 >
                   <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition duration-700 group-hover:translate-x-full" />
-                  <span className="relative z-10">Enviar consulta</span>
+                  <span className="relative z-10">Cotizar por WhatsApp</span>
                   <ArrowUpRight
                     size={17}
                     className="relative z-10 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                   />
                 </button>
+
+                <p className="text-center text-sm text-slate-500">
+                  Atención rápida · Coordinación segura · Respuesta profesional
+                </p>
               </div>
             </div>
           </div>

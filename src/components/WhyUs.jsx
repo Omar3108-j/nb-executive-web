@@ -23,11 +23,9 @@ const badges = [
 function WhyUs() {
   return (
     <section className="relative overflow-hidden bg-slate-50 py-24 md:py-28">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.08),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(15,23,42,0.06),transparent_28%)]" />
-
-      <div className="absolute left-[-80px] top-10 h-72 w-72 rounded-full bg-blue-200/30 blur-3xl" />
-      <div className="absolute right-[-80px] bottom-0 h-72 w-72 rounded-full bg-slate-300/30 blur-3xl" />
-
+<div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(30,64,175,0.24)_0%,rgba(59,130,246,0.10)_28%,rgba(255,255,255,0.88)_58%,rgba(255,255,255,0.96)_100%),radial-gradient(circle_at_top_left,rgba(37,99,235,0.22),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(15,23,42,0.08),transparent_30%)]" />
+<div className="absolute -left-10 top-0 h-80 w-80 rounded-full bg-blue-300/25 blur-3xl" />
+<div className="absolute left-[-80px] top-10 h-72 w-72 rounded-full bg-blue-300/35 blur-3xl" />
       <div className="relative mx-auto max-w-7xl px-6">
         <Reveal>
           <div className="max-w-3xl">

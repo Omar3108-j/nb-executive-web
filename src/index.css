@@ -1,125 +1,162 @@
 @import "tailwindcss";
 
-@keyframes shine {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
+/* =========================
+   TOKENS (base del sistema)
+========================= */
+
+:root {
+  --color-primary: #2563eb;
+  --color-accent: #60a5fa;
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.6s ease-out;
-}
+/* =========================
+   BASE
+========================= */
 
-.logo-glow:hover {
-  text-shadow:
-    0 0 8px rgba(37, 99, 235, 0.5),
-    0 0 16px rgba(37, 99, 235, 0.3);
-}
-
-.glow-blue {
-  box-shadow: 0 12px 34px rgba(37, 99, 235, 0.28);
-}
-
-.glow-blue-soft {
-  box-shadow: 0 0 20px rgba(37, 99, 235, 0.14);
-}
-
-.card-premium {
-  position: relative;
-  isolation: isolate;
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease,
-    border-color 0.35s ease;
-}
-
-.card-premium::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.7),
-    rgba(255, 255, 255, 0.05),
-    rgba(59, 130, 246, 0.18)
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-
-.card-premium:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14);
-  border-color: rgba(37, 99, 235, 0.2);
-}
-
-.card-premium:hover::before {
-  opacity: 1;
-}
-
-.title-glow {
-  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-}
-
-.subtitle-glow {
-  text-shadow: 0 0 16px rgba(37, 99, 235, 0.35);
-}
-
-.star-glow {
-  filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.55));
-}
-
-.shine-line {
-  position: relative;
-}
-
-.shine-line::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -10px;
-  width: 68px;
-  height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #2563eb, rgba(37, 99, 235, 0.15));
-}
-
-.icon-premium {
-  transition:
-    background 0.3s ease,
-    color 0.3s ease,
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.group:hover .icon-premium {
-  background: #2563eb;
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.3);
-}
 html {
   scroll-behavior: smooth;
 }
-@keyframes fleetShine {
+
+/* =========================
+   ANIMACIONES
+========================= */
+
+@keyframes fadeSlideIn {
   0% {
-    transform: translateX(-140%) rotate(12deg);
     opacity: 0;
-  }
-  20% {
-    opacity: 1;
+    transform: translateX(28px);
   }
   100% {
-    transform: translateX(340%) rotate(12deg);
-    opacity: 0;
+    opacity: 1;
+    transform: translateX(0);
   }
 }
+
+/* =========================
+   COMPONENTS (TAILWIND SAFE)
+========================= */
+
+@layer components {
+
+  /* Badge */
+  .ui-badge {
+    @apply inline-flex items-center rounded-full border border-white/10 
+    bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.3em] 
+    text-blue-200 backdrop-blur;
+  }
+
+  /* Titles */
+  .ui-title {
+    @apply mt-5 text-4xl font-black text-white md:text-5xl;
+  }
+
+  .ui-subtitle {
+    @apply mt-5 text-slate-300;
+  }
+
+  /* NAV */
+  .ui-nav-btn {
+    @apply flex h-11 w-11 items-center justify-center rounded-full 
+    border border-white/10 bg-white/10 text-white backdrop-blur-md;
+    transition: all 0.3s ease;
+  }
+
+  .ui-nav-btn:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* DOTS */
+  .ui-dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.35);
+    transition: all 0.3s ease;
+  }
+
+  .ui-dot.active {
+    width: 34px;
+    background: var(--color-accent);
+    box-shadow: 0 0 12px rgba(96,165,250,0.6);
+  }
+
+  /* SLIDER */
+  .ui-slider {
+    @apply overflow-hidden;
+  }
+
+  .ui-track {
+    display: flex;
+    transition: transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  .ui-page {
+    flex: 0 0 100%;
+    animation: fadeSlideIn 0.6s ease;
+  }
+
+  /* CARD BASE */
+  /* 🔥 CARD MÁS GLASS (deja ver el fondo) */
+.ui-card {
+  position: relative;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.75); /* antes 0.92 */
+  backdrop-filter: blur(14px);
+  transition: all 0.35s ease;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+/* hover más premium */
+.ui-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+}
+
+/* glow */
+.ui-glow {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(37,99,235,0.35), transparent);
+  filter: blur(50px);
+  top: -60px;
+  right: -60px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.ui-card:hover .ui-glow {
+  opacity: 1;
+}
+
+  /* Focus effect */
+  .ui-slider:hover .ui-card {
+    opacity: 0.55;
+  }
+
+  .ui-slider .ui-card:hover {
+    opacity: 1;
+  }
+}
+
+/* =========================
+   UTILIDADES EXISTENTES
+========================= */
+
+.star-glow {
+  filter: drop-shadow(0 0 6px rgba(250,204,21,0.55));
+}
+
+.icon-premium {
+  transition: all 0.3s ease;
+}
+
+.icon-premium:hover {
+  background: var(--color-primary);
+  color: white;
+}
+.whyus-glow-left { animation: whyusGlowFloatLeft 8s ease-in-out infinite; }
+.whyus-glow-top { animation: whyusGlowFloatTop 9s ease-in-out infinite; }
+.whyus-glow-right { animation: whyusGlowFloatRight 10s ease-in-out infinite; }
+.whyus-light-sweep { animation: whyusLightSweep 10s linear infinite; }

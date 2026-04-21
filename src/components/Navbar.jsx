@@ -9,6 +9,7 @@ import {
   Phone,
   ArrowUpRight,
 } from "lucide-react"
+import { FaInstagram, FaTiktok } from "react-icons/fa"
 
 function Navbar() {
   const [open, setOpen] = useState(false)
@@ -53,7 +54,6 @@ function Navbar() {
 
   return (
     <header className="sticky top-0 z-50">
-      {/* Fondo dinámico */}
       <div
         className={`absolute inset-0 transition-all duration-500 ${
           scrolled
@@ -62,7 +62,6 @@ function Navbar() {
         }`}
       />
 
-      {/* Línea elegante */}
       <div
         className={`absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent transition-opacity duration-500 ${
           scrolled ? "opacity-100" : "opacity-70"
@@ -144,8 +143,61 @@ function Navbar() {
             })}
           </nav>
 
-          {/* BOTÓN CTA */}
-          <div className="hidden md:block">
+          {/* DERECHA: ICONOS + CTA */}
+          <div className="hidden md:flex items-center gap-4">
+            
+            {/* ICONOS PRO */}
+      <div className="flex items-center gap-3 mr-2">
+        
+        {/* Instagram */}
+        <motion.a
+          href="https://instagram.com/nb_executivepremium"
+          target="_blank"
+          rel="noreferrer"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+          whileHover={{ scale: 1.12 }}
+          className="group relative flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition"
+        >
+          {/* glow */}
+          <div className="absolute inset-0 rounded-full bg-pink-500/0 blur-md transition group-hover:bg-pink-500/30" />
+
+          {/* icon */}
+          <FaInstagram size={16} className="relative z-10" />
+
+          {/* tooltip */}
+          <span className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-black/80 px-2 py-1 text-[10px] text-white opacity-0 transition group-hover:opacity-100">
+            Instagram
+          </span>
+        </motion.a>
+
+        {/* TikTok */}
+        <motion.a
+          href="https://tiktok.com/@nbexecutivepremium"
+          target="_blank"
+          rel="noreferrer"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+          whileHover={{ scale: 1.12 }}
+          className="group relative flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition"
+        >
+          {/* glow */}
+          <div className="absolute inset-0 rounded-full bg-cyan-400/0 blur-md transition group-hover:bg-cyan-400/25" />
+
+          {/* icon */}
+          <FaTiktok size={15} className="relative z-10" />
+
+          {/* tooltip */}
+          <span className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-black/80 px-2 py-1 text-[10px] text-white opacity-0 transition group-hover:opacity-100">
+            TikTok
+          </span>
+        </motion.a>
+
+      </div>
+
+            {/* CTA */}
             <motion.a
               href="#contacto"
               whileHover={{ scale: 1.04 }}

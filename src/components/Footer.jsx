@@ -29,25 +29,25 @@ function Footer() {
 
           <div className="flex justify-start md:justify-end gap-4 mt-6 mr-20 md:mr-28">
   
-  <a
-    href="https://instagram.com/nb_executivepremium"
-    target="_blank"
-    rel="noreferrer"
-    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-pink-500/20 hover:scale-110"
-  >
-    <FaInstagram size={20} />
-  </a>
+          <a
+            href="https://instagram.com/nb_executivepremium"
+            target="_blank"
+            rel="noreferrer"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-pink-500/20 hover:scale-110"
+          >
+            <FaInstagram size={20} />
+          </a>
 
-  <a
-    href="https://tiktok.com/@nbexecutivepremium"
-    target="_blank"
-    rel="noreferrer"
-    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 hover:scale-110"
-  >
-    <FaTiktok size={18} />
-  </a>
+          <a
+            href="https://tiktok.com/@nbexecutivepremium"
+            target="_blank"
+            rel="noreferrer"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 hover:scale-110"
+          >
+            <FaTiktok size={18} />
+          </a>
 
-</div>
+        </div>
         </div>
       </div>
       

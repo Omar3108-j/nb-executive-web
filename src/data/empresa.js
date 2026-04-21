@@ -9,7 +9,7 @@ export const empresa = {
   ubicacion: "Lima, Perú",
   telefono: "+51 904678397",
   whatsapp: "51987458696",
-  correo: "reservas@nbexecutivetransport.com",
+  correo: "reservas.nbexecutive@gmail.com",
 
  
 

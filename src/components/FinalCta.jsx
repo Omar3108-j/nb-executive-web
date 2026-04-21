@@ -3,8 +3,9 @@ import Reveal from "./Reveal"
 import { ArrowUpRight, MessageCircleMore } from "lucide-react"
 
 function FinalCta() {
-  const mensaje = `Buen día, deseo reservar un traslado ejecutivo con N&B Executive Premium.
-Quedo atento a su disponibilidad y coordinación.`
+  const mensaje = `Hola, deseo agendar un traslado con atención rápida y profesional en N&B Executive Premium.
+
+Quedo atento(a) para coordinar el servicio.`
   const urlWhatsApp = `https://wa.me/${String(empresa.whatsapp).replace(/\D/g, "")}?text=${encodeURIComponent(mensaje)}`
 
   return (

@@ -2,9 +2,10 @@ import { motion } from "framer-motion"
 import { empresa } from "../data/empresa"
 
 function WhatsAppButton() {
-  const mensaje = `Buen día, gracias por contactarnos.
-En N&B Executive Premium ofrecemos traslados seguros, puntuales y de alto nivel.
-Indíquenos su ubicación de origen para brindarle una atención personalizada.`
+  const mensaje = `Hola, deseo solicitar un servicio de traslado con N&B Executive Premium.
+Estoy interesado en un servicio seguro, puntual y de alto nivel.
+
+Quedo atento(a) a la coordinación.`
   const urlWhatsApp = `https://wa.me/${empresa.whatsapp}?text=${encodeURIComponent(mensaje)}`
 
   return (

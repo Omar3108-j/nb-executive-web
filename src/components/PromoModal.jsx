@@ -135,13 +135,31 @@ function PromoModal() {
                   alt="Servicio ejecutivo"
                   className="h-full w-full object-cover object-[50%_25%]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/35 to-transparent" />
+                <div className="absolute left-4 top-4 z-10 flex flex-col gap-2">
 
-                <div className="absolute left-4 top-4">
-                  <p className="inline-flex rounded-full border border-blue-300/20 bg-blue-500/15 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.24em] text-blue-100 backdrop-blur-md">
-                    Atención premium
-                  </p>
+                {/* ATENCIÓN PREMIUM (SEPARADO) */}
+                <p className="inline-flex w-max rounded-full border border-blue-300/20 bg-blue-500/15 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.24em] text-blue-100 backdrop-blur-md">
+                  Atención premium
+                </p>
+
+                {/* LOGO (SIN FONDO FUERTE) */}
+                <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 backdrop-blur-sm">
+
+                  <div className="leading-none">
+                    <div className="text-[16px] font-extrabold tracking-[-0.01em] text-white sm:text-[18px]">
+                      <span>N&amp;B </span>
+                      <span className="bg-gradient-to-r from-blue-400 via-sky-400 to-cyan-300 bg-clip-text text-transparent">
+                        Executive
+                      </span>
+                    </div>
+
+                    <div className="mt-1 text-[7px] font-medium uppercase tracking-[0.32em] text-sky-200 sm:text-[8px]">
+                      Premium Transport
+                    </div>
+                  </div>
+
                 </div>
+              </div>
 
                 <div className="absolute bottom-4 left-4 right-4">
                   <h3

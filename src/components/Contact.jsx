@@ -70,15 +70,14 @@ function Contact() {
     const correo = formData.correo.trim()
     const mensajeUsuario = formData.mensaje.trim()
 
-    const mensaje = `Buen día, gracias por contactarnos.
-En N&B Executive Premium ofrecemos traslados seguros, puntuales y de alto nivel.
+    const mensaje = `Hola, me gustaría solicitar un servicio de traslado con N&B Executive Premium.
 
 Nombre: ${nombre}
 Teléfono: ${telefono}
 Correo: ${correo || "-"}
 Servicio requerido: ${mensajeUsuario || "-"}
 
-Indíquenos su ubicación de origen para brindarle una atención personalizada.`
+Quedo atento(a) a la coordinación del servicio.`
 
     const numeroWhatsApp = String(empresa.whatsapp).replace(/\D/g, "")
     const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`

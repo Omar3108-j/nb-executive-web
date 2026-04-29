@@ -6,6 +6,7 @@ import {
   ShieldCheck,
   Clock3,
   BriefcaseBusiness,
+  Sparkles,
 } from "lucide-react"
 import { empresa } from "../data/empresa"
 import promoImg from "../assets/promo-executive.png"
@@ -15,9 +16,7 @@ function PromoModal() {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    const checkViewport = () => {
-      setIsMobile(window.innerWidth < 640)
-    }
+    const checkViewport = () => setIsMobile(window.innerWidth < 640)
 
     checkViewport()
     window.addEventListener("resize", checkViewport)
@@ -27,9 +26,7 @@ function PromoModal() {
     const TEN_MINUTES = 600000
 
     if (!lastClosed || now - Number(lastClosed) > TEN_MINUTES) {
-      const timer = setTimeout(() => {
-        setOpen(true)
-      }, window.innerWidth < 640 ? 3000 : 1400)
+      const timer = setTimeout(() => setOpen(true), window.innerWidth < 640 ? 1800 : 1200)
 
       return () => {
         clearTimeout(timer)
@@ -46,33 +43,24 @@ function PromoModal() {
   }
 
   const mensaje =
-    "Hola, deseo cotizar un traslado ejecutivo. Quisiera más información."
-  const urlWhatsApp = `https://wa.me/${empresa.whatsapp}?text=${encodeURIComponent(mensaje)}`
+    "Hola, deseo cotizar un traslado ejecutivo con N&B Executive Premium. Quisiera más información."
+  const urlWhatsApp = `https://wa.me/${String(empresa.whatsapp).replace(
+    /\D/g,
+    ""
+  )}?text=${encodeURIComponent(mensaje)}`
 
   const beneficios = [
-    {
-      icon: ShieldCheck,
-      title: "Servicio seguro",
-      desc: "Atención profesional",
-    },
-    {
-      icon: Clock3,
-      title: "Puntualidad",
-      desc: "Siempre a tiempo",
-    },
-    {
-      icon: BriefcaseBusiness,
-      title: "Corporativo",
-      desc: "Imagen ejecutiva",
-    },
+    { icon: ShieldCheck, title: "Seguro", desc: "Atención profesional" },
+    { icon: Clock3, title: "Puntual", desc: "Coordinación rápida" },
+    { icon: BriefcaseBusiness, title: "VIP", desc: "Servicio ejecutivo" },
   ]
 
   const modalAnimation = isMobile
     ? {
-        initial: { opacity: 0, y: 80 },
+        initial: { opacity: 0, y: 90 },
         animate: { opacity: 1, y: 0 },
-        exit: { opacity: 0, y: 80 },
-        transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
+        exit: { opacity: 0, y: 90 },
+        transition: { duration: 0.38, ease: [0.16, 1, 0.3, 1] },
       }
     : {
         initial: { opacity: 0, scale: 0.95, y: 20 },
@@ -86,7 +74,7 @@ function PromoModal() {
       {open && (
         <>
           <motion.div
-            className="fixed inset-0 z-[100] bg-slate-950/70 backdrop-blur-md"
+            className="fixed inset-0 z-[100] bg-slate-950/78 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -95,134 +83,114 @@ function PromoModal() {
           />
 
           <div
-            className={`fixed inset-0 z-[110] flex ${
-              isMobile
-                ? "items-end justify-center px-0 py-0"
-                : "items-center justify-center px-3 py-4"
-            }`}
-          >
+  className={`fixed inset-0 z-[110] flex ${isMobile? "items-end justify-center px-4 pb-5": "items-center justify-center px-4 py-5"}`}>
             <motion.div
               {...modalAnimation}
-              className={`relative w-full ${
+              className={`relative w-full overflow-hidden border border-white/25 bg-white shadow-[0_30px_90px_rgba(2,6,23,0.48)] ${
                 isMobile
-                  ? "max-w-none rounded-t-[28px] rounded-b-none"
-                  : "max-w-xl rounded-3xl"
-              } border border-white/30 bg-white/90 shadow-[0_30px_80px_rgba(15,23,42,0.35)] backdrop-blur-xl ${
-                isMobile ? "max-h-[88vh] overflow-y-auto" : "max-h-[90vh] overflow-y-auto"
+                ? "mb-2 max-h-[72vh] max-w-[92%] rounded-[30px]"
+                : "max-h-[90vh] max-w-xl rounded-[32px]"
               }`}
             >
               {isMobile && (
-                <div className="sticky top-0 z-20 flex justify-center bg-white/90 pt-3 backdrop-blur-xl">
-                  <div className="h-1.5 w-14 rounded-full bg-slate-300" />
-                </div>
+                <div className="absolute left-1/2 top-3 z-30 h-1.5 w-14 -translate-x-1/2 rounded-full bg-white/55" />
               )}
 
               <button
                 onClick={handleClose}
-                className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-black/75"
-                aria-label="Cerrar modal"
+                className="absolute right-4 top-4 z-30 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-md transition hover:bg-black/65"
+                aria-label="Cerrar promoción"
               >
                 <X size={18} />
               </button>
 
-              <div
-                className={`relative overflow-hidden ${
-                  isMobile ? "h-[180px] rounded-t-[28px]" : "h-[240px] rounded-t-3xl"
-                }`}
-              >
-                <img
-                  src={promoImg}
-                  alt="Servicio ejecutivo"
-                  className="h-full w-full object-cover object-[50%_25%]"
-                />
-                <div className="absolute left-4 top-4 z-10 flex flex-col gap-2">
+              <div className={`${isMobile ? "max-h-[92vh]" : "max-h-[90vh]"} overflow-y-auto`}>
+                <div className={`relative overflow-hidden ${isMobile ? "h-[170px] rounded-t-[30px]" : "h-[260px] rounded-t-[32px]"}`}>
+                  <img
+                    src={promoImg}
+                    alt="Servicio ejecutivo"
+                    className="h-full w-full object-cover object-[50%_28%]"
+                  />
 
-                {/* ATENCIÓN PREMIUM (SEPARADO) */}
-                <p className="inline-flex w-max rounded-full border border-blue-300/20 bg-blue-500/15 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.24em] text-blue-100 backdrop-blur-md">
-                  Atención premium
-                </p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/45 to-slate-950/10" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.28),transparent_34%)]" />
 
-                {/* LOGO (SIN FONDO FUERTE) */}
-                <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 backdrop-blur-sm">
+                  <div className="absolute left-5 top-8 z-10">
+                    <p className="inline-flex items-center gap-2 rounded-full border border-blue-300/20 bg-blue-500/18 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.22em] text-blue-100 backdrop-blur-md">
+                      <Sparkles size={13} />
+                      Atención premium
+                    </p>
 
-                  <div className="leading-none">
-                    <div className="text-[16px] font-extrabold tracking-[-0.01em] text-white sm:text-[18px]">
-                      <span>N&amp;B </span>
-                      <span className="bg-gradient-to-r from-blue-400 via-sky-400 to-cyan-300 bg-clip-text text-transparent">
-                        Executive
-                      </span>
-                    </div>
-
-                    <div className="mt-1 text-[7px] font-medium uppercase tracking-[0.32em] text-sky-200 sm:text-[8px]">
-                      Premium Transport
+                    <div className="mt-3 rounded-2xl border border-white/10 bg-white/8 px-3 py-2 backdrop-blur-sm">
+                      <div className="text-[18px] font-black tracking-[-0.03em] text-white">
+                        N&amp;B{" "}
+                        <span className="bg-gradient-to-r from-blue-400 via-sky-400 to-cyan-300 bg-clip-text text-transparent">
+                          Executive
+                        </span>
+                      </div>
+                      <div className="mt-1 text-[8px] font-semibold uppercase tracking-[0.32em] text-sky-200">
+                        Premium Transport
+                      </div>
                     </div>
                   </div>
 
+                  <div className="absolute bottom-5 left-5 right-5 z-10">
+                    <h3 className="max-w-sm text-xl font-black leading-tight tracking-[-0.03em] text-white">
+                      Traslado ejecutivo seguro y puntual
+                    </h3>
+                    <p className="mt-3 text-sm font-medium leading-6 text-slate-200">
+                      Servicio premium para aeropuerto, reuniones y reservas corporativas.
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3
-                    className={`font-black leading-tight text-white ${
-                      isMobile ? "text-xl" : "text-3xl"
-                    }`}
-                  >
-                    Traslado ejecutivo seguro y puntual
-                  </h3>
-                </div>
-              </div>
-
-              <div className={`${isMobile ? "px-4 py-5" : "px-6 py-6"}`}>
-                <div className={`grid gap-2 ${isMobile ? "grid-cols-1" : "grid-cols-3"}`}>
-                  {beneficios.map((item, i) => {
-                    const Icon = item.icon
-                    return (
-                      <div
-                        key={i}
-                        className="flex items-center gap-3 rounded-xl bg-slate-50 p-3"
-                      >
-                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
-                          <Icon size={16} />
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-slate-900">
+                <div className="relative bg-white px-5 pb-6 pt-5 sm:px-6 sm:pb-6">
+                  <div className="grid grid-cols-3 gap-2.5">
+                    {beneficios.map((item, i) => {
+                      const Icon = item.icon
+                      return (
+                        <div
+                          key={i}
+                          className="rounded-[20px] border border-slate-100 bg-slate-50 px-3 py-3 text-center shadow-sm"
+                        >
+                          <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
+                            <Icon size={17} />
+                          </div>
+                          <p className="mt-2 text-sm font-black text-slate-950">
                             {item.title}
                           </p>
-                          <p className="text-xs text-slate-500">{item.desc}</p>
+                          <p className="mt-1 text-[11px] leading-4 text-slate-500">
+                            {item.desc}
+                          </p>
                         </div>
-                      </div>
-                    )
-                  })}
-                </div>
+                      )
+                    })}
+                  </div>
 
-                <div className="mt-4 rounded-[20px] border border-blue-100 bg-blue-50/70 px-4 py-3 text-center">
-                  <p className="text-sm font-semibold text-slate-700">
-                    Atención inmediata · WhatsApp directo · Coordinación rápida
-                  </p>
-                </div>
+                  <div className="mt-5 rounded-[24px] border border-blue-100 bg-blue-50/80 p-4">
+                    <p className="text-center text-sm font-bold leading-6 text-slate-700">
+                      Atención inmediata · WhatsApp directo · Coordinación rápida
+                    </p>
+                  </div>
 
-                <p className="mt-4 text-sm leading-relaxed text-slate-600">
-                  Reserva tu traslado con atención profesional para aeropuerto,
-                  reuniones corporativas y viajes programados.
-                </p>
+                  <div className="mt-5 flex flex-col gap-3">
+                    <a
+                      href={urlWhatsApp}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex min-h-[54px] w-full items-center justify-center gap-2 rounded-full bg-blue-600 px-5 py-3.5 text-sm font-black text-white shadow-[0_16px_35px_rgba(37,99,235,0.34)] transition hover:bg-blue-700"
+                    >
+                      Cotizar por WhatsApp
+                      <ArrowUpRight size={17} />
+                    </a>
 
-                <div className="mt-5 flex flex-col gap-2">
-                  <a
-                    href={urlWhatsApp}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex w-full items-center justify-center gap-2 rounded-full bg-blue-600 px-5 py-3.5 text-sm font-semibold text-white shadow-lg transition hover:bg-blue-700"
-                  >
-                    Cotizar por WhatsApp
-                    <ArrowUpRight size={16} />
-                  </a>
-
-                  <button
-                    onClick={handleClose}
-                    className="w-full rounded-full border border-slate-200 px-5 py-3.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                  >
-                    Cerrar
-                  </button>
+                    <button
+                      onClick={handleClose}
+                      className="w-full rounded-full border border-slate-200 px-5 py-3.5 text-sm font-bold text-slate-700 transition hover:bg-slate-50"
+                    >
+                      Ahora no
+                    </button>
+                  </div>
                 </div>
               </div>
             </motion.div>
